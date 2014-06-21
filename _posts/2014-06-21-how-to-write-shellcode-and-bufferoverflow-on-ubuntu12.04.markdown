@@ -9,23 +9,30 @@ This is a post relate to basic buffer overflow and how to write shellcode. The p
 
 First, I will talk about how to write shellcode. 
 
-There are many methods to do this, one of them is described by Aleph One, you can have a look [here][alepheone]. The second and one of the most common way is to write an `.asm` file and generate object code using `nasm`. I had a problem with this before, because I used to write `AT&T` syntax assembly code, stored as `.S` file and compile using `gcc`. 
+There are many methods to do this, one of them is described by Aleph One, you can have a look [here][alephone]. The second and one of the most common way is to write an `.asm` file and generate object code using `nasm`. I had a problem with this before, because I used to write `AT&T` syntax assembly code, stored as `.S` file and compile using `gcc`. 
 
 Here's the [documentation][nasm_doc] for nasm.  
 
 And now we can write our first shellcode that call `exit`, a system call. 
 Here's the program
 {% highlight ruby %}
-;exit.asm
-[SECTION .text]
-global _start
-_start:
-        xor eax, eax       ;exit is syscall 1
-        mov al, 1       ;exit is syscall 1
-        xor ebx,ebx     ;zero out ebx
-        int 0x80
+	;; exit1.asm
+	section .text
+	global _start		;define the starting point of program
+_start:	
+        mov eax, 1       	; syscall number is 1 for eax
+        mov ebx, 0		;setting ebx as zero
+        int 0x80		;go to kernel mode
 {% endhighlight %}
 
-[alephone]: http://www-inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf
+There're few points I want to specify.
+<li>
+	<ul>When we make a system call, `eax` store the system call number, first parameter will be stored in `ebx`, second in `ecx`, third in `edx`, fifth in `edi` and sixth in `ebp`</ul>
+	<ul>`.text` section is used for keeping the actual code. This section must begin with the declaration `global _start`, which tells the kernel where the program execution begins</ul>
+	<ul>`.bss` section is used for declaring variables</ul>
+	<ul>`.data` section is used for declaring initialized data or constants. This data does not change at runtime.</ul>
+</li>
 
+
+[alephone]: http://www-inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf
 [nasm_doc]: http://www.nasm.us/doc/
