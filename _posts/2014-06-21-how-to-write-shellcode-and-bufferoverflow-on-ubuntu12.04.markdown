@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How to write shellcode and bufferoverflow on ubuntu12.04""
+title:  "How to write shellcode and bufferoverflow on ubuntu12.04"
 date:   2014-06-21 20:25:11
 categories: 
 ---
