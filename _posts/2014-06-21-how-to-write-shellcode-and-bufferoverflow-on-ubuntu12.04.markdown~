@@ -2,7 +2,7 @@
 layout: post
 title:  "How to write shellcode and bufferoverflow on ubuntu12.04""
 date:   2014-06-21 20:25:11
-categories: 
+categories: shellcode security
 ---
 
 This is a post relate to basic buffer overflow and how to write shellcode. The prerequisite for this is know how to write assembly languages and have basic idea about stack in computer system. 
