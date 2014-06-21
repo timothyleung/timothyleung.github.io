@@ -1,9 +1,9 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+title: T. LEUNG
+email: tleung@student.unimelb.edu.au
+description: "The goal of this blog is to provide tutorials that can make readers have better understanding about computer system and system security. "
 baseurl: ""
-url: "http://yourdomain.com"
+url: "http://timothyleung.github.io"
 
 # Build settings
 markdown: kramdown
