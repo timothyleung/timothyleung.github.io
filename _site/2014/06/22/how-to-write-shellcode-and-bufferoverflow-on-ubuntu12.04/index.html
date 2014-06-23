@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>About</title>
+    <title>How to write shellcode and bufferoverflow on ubuntu12.04</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="The goal of this blog is to provide tutorials that can make readers have better understanding about computer system and system security. ">
-    <link rel="canonical" href="http://timothyleung.github.io/about/">
+    <link rel="canonical" href="http://timothyleung.github.io/2014/06/22/how-to-write-shellcode-and-bufferoverflow-on-ubuntu12.04/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -56,15 +56,38 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>About</h1>
+    <h1>How to write shellcode and bufferoverflow on ubuntu12.04</h1>
+    <p class="meta">Jun 22, 2014</p>
   </header>
 
   <article class="post-content">
-  <p>This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="http://jekyllrb.com/">jekyllrb.com</a></p>
+  <p>This is a post relate to basic buffer overflow and how to write shellcode. The prerequisite for this is know how to write assembly languages and have basic idea about stack in computer system. </p>
 
-<p>You can find the source code for the Jekyll new theme at: <a href="https://github.com/jglovier/jekyll-new">github.com/jglovier/jekyll-new</a></p>
+<p>First, I will talk about how to write shellcode. </p>
 
-<p>You can find the source code for Jekyll at <a href="https://github.com/jekyll/jekyll">github.com/jekyll/jekyll</a></p>
+<p>There are many methods to do this, one of them is described by Aleph One, you can have a look <a href="http://www-inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf">here</a>. The second and one of the most common way is to write an <code>.asm</code> file and generate object code using <code>nasm</code>. I had a problem with this before, because I used to write <code>AT&amp;T</code> syntax assembly code, stored as <code>.S</code> file and compile using <code>gcc</code>. </p>
+
+<p>Here’s the <a href="http://www.nasm.us/doc/">documentation</a> for nasm.  </p>
+
+<p>And now we can write our first shellcode that call <code>exit</code>, a system call. 
+Here’s the program</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="p">;;</span> <span class="n">exit1</span><span class="o">.</span><span class="n">asm</span>
+	<span class="n">section</span> <span class="o">.</span><span class="n">text</span>
+	<span class="n">global</span> <span class="n">_start</span>		<span class="p">;</span><span class="n">define</span> <span class="n">the</span> <span class="n">starting</span> <span class="n">point</span> <span class="n">of</span> <span class="n">program</span>
+<span class="ss">_start</span><span class="p">:</span>	
+        <span class="n">mov</span> <span class="n">eax</span><span class="p">,</span> <span class="mi">1</span>       	<span class="p">;</span> <span class="nb">syscall</span> <span class="n">number</span> <span class="n">is</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">eax</span>
+        <span class="n">mov</span> <span class="n">ebx</span><span class="p">,</span> <span class="mi">0</span>		<span class="p">;</span><span class="n">setting</span> <span class="n">ebx</span> <span class="n">as</span> <span class="n">zero</span>
+        <span class="n">int</span> <span class="mh">0x80</span>		<span class="p">;</span><span class="n">go</span> <span class="n">to</span> <span class="n">kernel</span> <span class="n">mode</span></code></pre></div>
+
+<p>There’re few points I want to specify.</p>
+<ul>
+	<li>When we make a system call, `eax` store the system call number, first parameter will be stored in `ebx`, second in `ecx`, third in `edx`, fifth in `edi` and sixth in `ebp`</li>
+	<li>`.text` section is used for keeping the actual code. This section must begin with the declaration `global _start`, which tells the kernel where the program execution begins</li>
+	<li>`.bss` section is used for declaring variables</li>
+	<li>`.data` section is used for declaring initialized data or constants. This data does not change at runtime.</li>
+</ul>
+
 
   </article>
 

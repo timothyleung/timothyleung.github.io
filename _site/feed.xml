@@ -1,30 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
+    <title>T. LEUNG</title>
+    <description>The goal of this blog is to provide tutorials that can make readers have better understanding about computer system and system security. </description>
+    <link>http://timothyleung.github.io/</link>
+    <atom:link href="http://timothyleung.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code&gt;-w&lt;/code&gt; switch) to see your changes!
-To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt;
+        <title>How to write shellcode and bufferoverflow on ubuntu12.04</title>
+        <description>&lt;p&gt;This is a post relate to basic buffer overflow and how to write shellcode. The prerequisite for this is know how to write assembly languages and have basic idea about stack in computer system. &lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;p&gt;First, I will talk about how to write shellcode. &lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Tom&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;There are many methods to do this, one of them is described by Aleph One, you can have a look &lt;a href=&quot;http://www-inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf&quot;&gt;here&lt;/a&gt;. The second and one of the most common way is to write an &lt;code&gt;.asm&lt;/code&gt; file and generate object code using &lt;code&gt;nasm&lt;/code&gt;. I had a problem with this before, because I used to write &lt;code&gt;AT&amp;amp;T&lt;/code&gt; syntax assembly code, stored as &lt;code&gt;.S&lt;/code&gt; file and compile using &lt;code&gt;gcc&lt;/code&gt;. &lt;/p&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here’s the &lt;a href=&quot;http://www.nasm.us/doc/&quot;&gt;documentation&lt;/a&gt; for nasm.  &lt;/p&gt;
+
+&lt;p&gt;And now we can write our first shellcode that call &lt;code&gt;exit&lt;/code&gt;, a system call. 
+Here’s the program&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exit1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;section&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_start&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;starting&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;program&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;	
+        &lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;       	&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;syscall&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setting&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebx&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zero&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x80&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;There’re few points I want to specify.&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;When we make a system call, `eax` store the system call number, first parameter will be stored in `ebx`, second in `ecx`, third in `edx`, fifth in `edi` and sixth in `ebp`&lt;/li&gt;
+	&lt;li&gt;`.text` section is used for keeping the actual code. This section must begin with the declaration `global _start`, which tells the kernel where the program execution begins&lt;/li&gt;
+	&lt;li&gt;`.bss` section is used for declaring variables&lt;/li&gt;
+	&lt;li&gt;`.data` section is used for declaring initialized data or constants. This data does not change at runtime.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Sun, 22 Jun 2014 06:25:11 +1000</pubDate>
+        <link>http://timothyleung.github.io/2014/06/22/how-to-write-shellcode-and-bufferoverflow-on-ubuntu12.04/</link>
+        <guid isPermaLink="true">http://timothyleung.github.io/2014/06/22/how-to-write-shellcode-and-bufferoverflow-on-ubuntu12.04/</guid>
+      </item>
+    
+      <item>
+        <title>Welcome to my blog!</title>
+        <description>&lt;p&gt;Welcome to my tech blog. My name’s Tim. I am an undergrad student in &lt;a href=&quot;http://www.unimelb.edu.au/&quot;&gt;University of Melbourne&lt;/a&gt; studying computer science and passionate about system security and operating system. This website is for developers who wish to better understand computer system and computer security. &lt;/p&gt;
+
+&lt;p&gt;The goal of the blog is to provide tutorials that can make readers have better understanding about computer system. &lt;/p&gt;
+
+&lt;p&gt;I encourage comments and willing to hear from you. I know I still have a lot of rooms for improvement, so don’t hesitate to leave comments and send me emails (tleung@student.unimelb.edu.au)!&lt;/p&gt;
+
+&lt;p&gt;Have a nice day,
+Tim&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 21 Jun 2014 22:11:22 +1000</pubDate>
-        <link>http://yourdomain.com/jekyll/update/2014/06/21/welcome-to-jekyll/</link>
-        <guid isPermaLink="true">http://yourdomain.com/jekyll/update/2014/06/21/welcome-to-jekyll/</guid>
+        <link>http://timothyleung.github.io/2014/06/21/welcome-to-my-blog/</link>
+        <guid isPermaLink="true">http://timothyleung.github.io/2014/06/21/welcome-to-my-blog/</guid>
       </item>
     
   </channel>
