@@ -82,10 +82,10 @@ Here’s the program</p>
 
 <p>There’re few points I want to specify.</p>
 <ul>
-	<li>When we make a system call, `eax` store the system call number, first parameter will be stored in `ebx`, second in `ecx`, third in `edx`, fifth in `edi` and sixth in `ebp`</li>
-	<li>`.text` section is used for keeping the actual code. This section must begin with the declaration `global _start`, which tells the kernel where the program execution begins</li>
-	<li>`.bss` section is used for declaring variables</li>
-	<li>`.data` section is used for declaring initialized data or constants. This data does not change at runtime.</li>
+	<li>When we make a system call, <code>eax</code> store the system call number, first parameter will be stored in <code>ebx</code>, second in <code>ecx</code>, third in <code>edx</code>, fifth in <code>edi</code> and sixth in <code>ebp</code></li>
+	<li><code>.text</code> section is used for keeping the actual code. This section must begin with the declaration <code>global _start</code>, which tells the kernel where the program execution begins</li>
+	<li><code>.bss</code> section is used for declaring variables</li>
+	<li><code>.data</code> section is used for declaring initialized data or constants. This data does not change at runtime.</li>
 </ul>
 
 
