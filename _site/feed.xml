@@ -30,10 +30,67 @@ Here’s the program&lt;/p&gt;
 &lt;p&gt;There’re few points I want to specify.&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;When we make a system call, &lt;code&gt;eax&lt;/code&gt; store the system call number, first parameter will be stored in &lt;code&gt;ebx&lt;/code&gt;, second in &lt;code&gt;ecx&lt;/code&gt;, third in &lt;code&gt;edx&lt;/code&gt;, fifth in &lt;code&gt;edi&lt;/code&gt; and sixth in &lt;code&gt;ebp&lt;/code&gt;&lt;/li&gt;
+
 	&lt;li&gt;&lt;code&gt;.text&lt;/code&gt; section is used for keeping the actual code. This section must begin with the declaration &lt;code&gt;global _start&lt;/code&gt;, which tells the kernel where the program execution begins&lt;/li&gt;
+
 	&lt;li&gt;&lt;code&gt;.bss&lt;/code&gt; section is used for declaring variables&lt;/li&gt;
+
 	&lt;li&gt;&lt;code&gt;.data&lt;/code&gt; section is used for declaring initialized data or constants. This data does not change at runtime.&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;And now we are ready to generate byte code using the program we just wrote. The byte code is how the machine going to understand our program. For details, check out intel-sys in the intel website. We will generate byte code using &lt;code&gt;nasm&lt;/code&gt; and &lt;code&gt;ld&lt;/code&gt;. We first generate object file using &lt;code&gt;nasm&lt;/code&gt; and then we create an executable file using &lt;code&gt;ld&lt;/code&gt;, finally we run &lt;code&gt;objdump -d exec_file&lt;/code&gt; to get the byte code.  &lt;/p&gt;
+
+&lt;p&gt;First run, &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;nasm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;-f&lt;/code&gt; specifies the output format, for all output format, check the &lt;a href=&quot;http://www.nasm.us/doc/nasmdoc7.html&quot;&gt;documentation&lt;/a&gt;, in this case we are use &lt;code&gt;elf&lt;/code&gt; which is executable and linkable format object. &lt;/p&gt;
+
+&lt;p&gt;Then we will run, &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;ld&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elf_i386&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# -m elf_i386 is for 64bits machine to create 32 bits executable&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And now we have a executable program called &lt;code&gt;exit&lt;/code&gt;. We can now run &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;objdump&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;to obtain the byte code. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;timothy&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@timothy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;b020a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/Desktop/s&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hellcode&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objdump&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elf32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i386&lt;/span&gt;
+
+
+&lt;span class=&quot;no&quot;&gt;Disassembly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;08048060&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+ &lt;span class=&quot;mi&quot;&gt;8048060&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;b8&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;01&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt;       	&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;    &lt;span class=&quot;vg&quot;&gt;$0x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt;
+ &lt;span class=&quot;mi&quot;&gt;8048065&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;bb&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;00&lt;/span&gt;       	&lt;span class=&quot;n&quot;&gt;mov&lt;/span&gt;    &lt;span class=&quot;vg&quot;&gt;$0x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ebx&lt;/span&gt;
+ &lt;span class=&quot;mi&quot;&gt;804806&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;                	&lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;vg&quot;&gt;$0x80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The middle column is the byte code and we obtain our first shellcode!&lt;code&gt;\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80&lt;/code&gt;. However, most of the exploit treat shellcode as string. And we can see a lot of null byte &lt;code&gt;\x00&lt;/code&gt; inside our shellcode. The program will not be executed as we wish if we use this as shellcode. So the next thing we need to do is to get rid of all the null byte. But how? &lt;/p&gt;
+
+&lt;p&gt;Here’s some common tricks. &lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;xor eax, eax&lt;/code&gt; which is equivalent to &lt;code&gt;mov eax, 0&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;Try to use the smaller register if possible.For example, &lt;code&gt;mov al, 10&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are more tricks for you to explore, but this two are pretty common and perfect for beginner.&lt;/p&gt;
+
+&lt;p&gt;So here’s our revised version of &lt;code&gt;exit.asm&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exit2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;section&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_start&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;starting&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;program&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;	
+	&lt;span class=&quot;n&quot;&gt;xor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;inc&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt;			&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;increment&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eax&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;xor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebx&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ebx&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x80&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We can obtain the new shellcode by following the same steps. The new shellcode will be &lt;code&gt;\x31\xc0\x40\x31\xdb\xcd\x80&lt;/code&gt;. It is now shorter and without null bytes! Hooray!&lt;/p&gt;
+
+&lt;p&gt;We will continue writing shellcode involve string and exec in next post. Then we can start our buffer overflow attack. &lt;/p&gt;
 
 </description>
         <pubDate>Sun, 22 Jun 2014 06:25:11 +1000</pubDate>
