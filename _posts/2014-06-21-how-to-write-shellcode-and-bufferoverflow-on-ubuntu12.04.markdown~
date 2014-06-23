@@ -28,8 +28,11 @@ _start:
 There're few points I want to specify.
 <li>
 	<ul>When we make a system call, `eax` store the system call number, first parameter will be stored in `ebx`, second in `ecx`, third in `edx`, fifth in `edi` and sixth in `ebp`</ul>
+
 	<ul>`.text` section is used for keeping the actual code. This section must begin with the declaration `global _start`, which tells the kernel where the program execution begins</ul>
+
 	<ul>`.bss` section is used for declaring variables</ul>
+
 	<ul>`.data` section is used for declaring initialized data or constants. This data does not change at runtime.</ul>
 </li>
 
