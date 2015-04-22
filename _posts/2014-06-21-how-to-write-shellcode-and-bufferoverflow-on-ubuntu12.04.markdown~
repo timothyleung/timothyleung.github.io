@@ -76,7 +76,7 @@ Here's some common tricks.
 <ul>
 	<li><code>xor eax, eax</code> which is equivalent to <code>mov eax, 0</code></li>
 	<li>Try to use the smaller register if possible.For example, <code>mov al, 10</code></li>
-</ul>
+</ul
 There are more tricks for you to explore, but this two are pretty common and perfect for beginner.
 
 So here's our revised version of `exit.asm`

@@ -83,10 +83,67 @@ Here’s the program</p>
 <p>There’re few points I want to specify.</p>
 <ul>
 	<li>When we make a system call, <code>eax</code> store the system call number, first parameter will be stored in <code>ebx</code>, second in <code>ecx</code>, third in <code>edx</code>, fifth in <code>edi</code> and sixth in <code>ebp</code></li>
+
 	<li><code>.text</code> section is used for keeping the actual code. This section must begin with the declaration <code>global _start</code>, which tells the kernel where the program execution begins</li>
+
 	<li><code>.bss</code> section is used for declaring variables</li>
+
 	<li><code>.data</code> section is used for declaring initialized data or constants. This data does not change at runtime.</li>
 </ul>
+
+<p>And now we are ready to generate byte code using the program we just wrote. The byte code is how the machine going to understand our program. For details, check out intel-sys in the intel website. We will generate byte code using <code>nasm</code> and <code>ld</code>. We first generate object file using <code>nasm</code> and then we create an executable file using <code>ld</code>, finally we run <code>objdump -d exec_file</code> to get the byte code.  </p>
+
+<p>First run, </p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">nasm</span> <span class="o">-</span><span class="n">f</span> <span class="n">elf</span> <span class="o">-</span><span class="n">o</span> <span class="nb">exit</span><span class="o">.</span><span class="n">o</span> <span class="nb">exit</span><span class="o">.</span><span class="n">asm</span></code></pre></div>
+
+<p><code>-f</code> specifies the output format, for all output format, check the <a href="http://www.nasm.us/doc/nasmdoc7.html">documentation</a>, in this case we are use <code>elf</code> which is executable and linkable format object. </p>
+
+<p>Then we will run, </p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">ld</span> <span class="o">-</span><span class="n">m</span> <span class="n">elf_i386</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="nb">exit</span> <span class="nb">exit</span><span class="o">.</span><span class="n">o</span> <span class="c1"># -m elf_i386 is for 64bits machine to create 32 bits executable</span></code></pre></div>
+
+<p>And now we have a executable program called <code>exit</code>. We can now run </p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">objdump</span> <span class="o">-</span><span class="n">d</span> <span class="nb">exit</span></code></pre></div>
+
+<p>to obtain the byte code. </p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">timothy</span><span class="vi">@timothy</span><span class="o">-</span><span class="mi">23</span><span class="o">-</span><span class="ss">b020a</span><span class="p">:</span><span class="o">~</span><span class="sr">/Desktop/s</span><span class="n">hellcode</span><span class="err">$</span> <span class="n">objdump</span> <span class="o">-</span><span class="n">d</span> <span class="nb">exit</span>
+
+<span class="nb">exit</span><span class="p">:</span>     <span class="n">file</span> <span class="nb">format</span> <span class="n">elf32</span><span class="o">-</span><span class="n">i386</span>
+
+
+<span class="no">Disassembly</span> <span class="n">of</span> <span class="n">section</span> <span class="o">.</span><span class="n">text</span><span class="p">:</span>
+
+<span class="mi">08048060</span> <span class="o">&lt;.</span><span class="n">text</span><span class="o">&gt;</span><span class="p">:</span>
+ <span class="mi">8048060</span><span class="p">:</span>	<span class="n">b8</span> <span class="mo">01</span> <span class="mo">00</span> <span class="mo">00</span> <span class="mo">00</span>       	<span class="n">mov</span>    <span class="vg">$0x1</span><span class="p">,</span><span class="o">%</span><span class="n">eax</span>
+ <span class="mi">8048065</span><span class="p">:</span>	<span class="n">bb</span> <span class="mo">00</span> <span class="mo">00</span> <span class="mo">00</span> <span class="mo">00</span>       	<span class="n">mov</span>    <span class="vg">$0x0</span><span class="p">,</span><span class="o">%</span><span class="n">ebx</span>
+ <span class="mi">804806</span><span class="ss">a</span><span class="p">:</span>	<span class="n">cd</span> <span class="mi">80</span>                	<span class="n">int</span>    <span class="vg">$0x80</span></code></pre></div>
+
+<p>The middle column is the byte code and we obtain our first shellcode!<code>\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80</code>. However, most of the exploit treat shellcode as string. And we can see a lot of null byte <code>\x00</code> inside our shellcode. The program will not be executed as we wish if we use this as shellcode. So the next thing we need to do is to get rid of all the null byte. But how? </p>
+
+<p>Here’s some common tricks. </p>
+<ul>
+	<li><code>xor eax, eax</code> which is equivalent to <code>mov eax, 0</code></li>
+	<li>Try to use the smaller register if possible.For example, <code>mov al, 10</code></li>
+</ul>
+<p>There are more tricks for you to explore, but this two are pretty common and perfect for beginner.</p>
+
+<p>So here’s our revised version of <code>exit.asm</code></p>
+
+<div class="highlight"><pre><code class="ruby"><span class="p">;;</span> <span class="n">exit2</span><span class="o">.</span><span class="n">asm</span>
+	<span class="n">section</span> <span class="o">.</span><span class="n">text</span>
+	<span class="n">global</span> <span class="n">_start</span>		<span class="p">;</span><span class="n">define</span> <span class="n">the</span> <span class="n">starting</span> <span class="n">point</span> <span class="n">of</span> <span class="n">program</span>
+<span class="ss">_start</span><span class="p">:</span>	
+	<span class="n">xor</span> <span class="n">eax</span><span class="p">,</span> <span class="n">eax</span>		<span class="p">;</span> <span class="n">set</span> <span class="n">eax</span> <span class="n">as</span> <span class="mi">0</span>
+	<span class="n">inc</span> <span class="n">eax</span>			<span class="p">;</span><span class="n">increment</span> <span class="n">eax</span> <span class="n">by</span> <span class="mi">1</span>
+	<span class="n">xor</span> <span class="n">ebx</span><span class="p">,</span> <span class="n">ebx</span>		<span class="p">;</span><span class="n">set</span> <span class="n">ebx</span> <span class="n">as</span> <span class="mi">0</span>
+        <span class="n">int</span> <span class="mh">0x80</span>		<span class="p">;</span><span class="n">go</span> <span class="n">to</span> <span class="n">kernel</span> <span class="n">mode</span></code></pre></div>
+
+<p>We can obtain the new shellcode by following the same steps. The new shellcode will be <code>\x31\xc0\x40\x31\xdb\xcd\x80</code>. It is now shorter and without null bytes! Hooray!</p>
+
+<p>We will continue writing shellcode involve string and exec in next post. Then we can start our buffer overflow attack. </p>
 
 
   </article>
