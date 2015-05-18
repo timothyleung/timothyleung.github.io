@@ -2,7 +2,7 @@
 layout: post
 title:  "Offensive Security Certified Professional (OSCP) Review"
 date:   2015-04-22 15:04:00
-categories: Computer Security
+categories: 
 ---
 
 I got my OSCP finally after spending few months on it. I reckon this is not easy at all and most importantly you need to know how to learn by yourself. 
