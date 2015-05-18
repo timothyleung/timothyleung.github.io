@@ -7,6 +7,35 @@
     <atom:link href="http://timothyleung.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Offensive Security Certified Professional (OSCP) Review</title>
+        <description>&lt;p&gt;I have spent few month working on OSCP and finally I got it. I reckon this is not easy at all and you need to know how to learn by yourself. &lt;/p&gt;
+
+&lt;p&gt;The course covers a broad area about penetration testing. The materials itself (Videos and pdf file of 300 pages) will give you a concise idea on the topics. You will learn much more by goolging yourself while you are working on the lab machines. &lt;/p&gt;
+
+&lt;p&gt;The topics that covered are &lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt; Bash scripting &lt;/li&gt;
+	&lt;li&gt; Essentials Tools such as nc, wireshark, tcpdump &lt;/li&gt;
+	&lt;li&gt; Information gathering, &lt;code&gt;enum4linux&lt;/code&gt;, &lt;code&gt;nmap&lt;/code&gt; etc.. &lt;/li&gt;
+	&lt;li&gt; Buffer Overflows &lt;/li&gt;
+	&lt;li&gt; Working with exploit &lt;/li&gt;
+	&lt;li&gt; File Transfer &lt;/li&gt;
+	&lt;li&gt; Privilege Escalation &lt;/li&gt;
+	&lt;li&gt; Client side attack (&lt;code&gt;XSS&lt;/code&gt;, &lt;code&gt;email with attachments&lt;/code&gt;, &lt;code&gt;Web browser exploits&lt;/code&gt;)&lt;/li&gt;
+	&lt;li&gt; Web application attack (&lt;code&gt;SQL Injection&lt;/code&gt;, &lt;code&gt;Password cracking&lt;/code&gt;)&lt;/li&gt;
+	&lt;li&gt; Tunneling, Pivoting, Port Forwarding&lt;/li&gt;
+	&lt;li&gt;Metasploit Framework&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I would say all of them are really interesting after taking the course. Before I took the course, I only have a brief idea about them. &lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 22 Apr 2015 23:04:00 +0800</pubDate>
+        <link>http://timothyleung.github.io/2015/04/22/OSCP-review/</link>
+        <guid isPermaLink="true">http://timothyleung.github.io/2015/04/22/OSCP-review/</guid>
+      </item>
+    
+      <item>
         <title>How to write shellcode and bufferoverflow on ubuntu12.04</title>
         <description>&lt;p&gt;This is a post relate to basic buffer overflow and how to write shellcode. The prerequisite for this is know how to write assembly languages and have basic idea about stack in computer system. &lt;/p&gt;
 
@@ -93,7 +122,7 @@ Here’s the program&lt;/p&gt;
 &lt;p&gt;We will continue writing shellcode involve string and exec in next post. Then we can start our buffer overflow attack. &lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 22 Jun 2014 06:25:11 +1000</pubDate>
+        <pubDate>Sun, 22 Jun 2014 04:25:11 +0800</pubDate>
         <link>http://timothyleung.github.io/2014/06/22/how-to-write-shellcode-and-bufferoverflow-on-ubuntu12.04/</link>
         <guid isPermaLink="true">http://timothyleung.github.io/2014/06/22/how-to-write-shellcode-and-bufferoverflow-on-ubuntu12.04/</guid>
       </item>
@@ -110,7 +139,7 @@ Here’s the program&lt;/p&gt;
 Tim&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 21 Jun 2014 22:11:22 +1000</pubDate>
+        <pubDate>Sat, 21 Jun 2014 20:11:22 +0800</pubDate>
         <link>http://timothyleung.github.io/2014/06/21/welcome-to-my-blog/</link>
         <guid isPermaLink="true">http://timothyleung.github.io/2014/06/21/welcome-to-my-blog/</guid>
       </item>

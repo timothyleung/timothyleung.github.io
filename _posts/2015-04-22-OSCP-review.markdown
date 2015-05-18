@@ -2,10 +2,10 @@
 layout: post
 title:  "Offensive Security Certified Professional (OSCP) Review"
 date:   2015-04-22 15:04:00
-categories: 
+categories: Computer Security
 ---
 
-I have spent few months working on OSCP and finally I got it. I reckon this is not easy at all and you need to know how to learn by yourself. 
+I got my OSCP finally after spending few months on it. I reckon this is not easy at all and most importantly you need to know how to learn by yourself. 
 
 I do not have a sound background on penteration testing and most of the things are new to me. I was studying in university at the time I was doing this course. This course really take tonnes of focusing time. It will be really tough if you have a full time job or a full time student. Prepare to be no social life if you have a similar background as me.
 
@@ -34,3 +34,6 @@ For people who would like to take this course:
 	<li>Self learning is IMPORTANT</li>
 	<li>You do not need knowledge in debugger</li>
 </ul>
+
+
+
