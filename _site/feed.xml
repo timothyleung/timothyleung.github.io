@@ -7,8 +7,19 @@
     <atom:link href="http://timothyleung.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>UVA11902   Dominator</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 May 2015 00:00:00 +0800</pubDate>
+        <link>http://timothyleung.github.io/2015/05/27/uva11902---dominator/</link>
+        <guid isPermaLink="true">http://timothyleung.github.io/2015/05/27/uva11902---dominator/</guid>
+      </item>
+    
+      <item>
         <title>Offensive Security Certified Professional (OSCP) Review</title>
-        <description>&lt;p&gt;I have spent few month working on OSCP and finally I got it. I reckon this is not easy at all and you need to know how to learn by yourself. &lt;/p&gt;
+        <description>&lt;p&gt;I got my OSCP finally after spending few months on it. I reckon this is not easy at all and most importantly you need to know how to learn by yourself. &lt;/p&gt;
+
+&lt;p&gt;I do not have a sound background on penteration testing and most of the things are new to me. I was studying in university at the time I was doing this course. This course really take tonnes of focusing time. It will be really tough if you have a full time job or a full time student. Prepare to be no social life if you have a similar background as me.&lt;/p&gt;
 
 &lt;p&gt;The course covers a broad area about penetration testing. The materials itself (Videos and pdf file of 300 pages) will give you a concise idea on the topics. You will learn much more by goolging yourself while you are working on the lab machines. &lt;/p&gt;
 
@@ -28,6 +39,15 @@
 &lt;/ul&gt;
 
 &lt;p&gt;I would say all of them are really interesting after taking the course. Before I took the course, I only have a brief idea about them. &lt;/p&gt;
+
+&lt;p&gt;For people who would like to take this course:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Make sure you have allocate enough time for this&lt;/li&gt;
+	&lt;li&gt;Self learning is IMPORTANT&lt;/li&gt;
+	&lt;li&gt;You do not need knowledge in debugger&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;At first, you will be so frusrated by hearing the “Try Harder” slogan. However, you will get used to it and start to understand the real meaning of “Try Harder”. It gives you more than penetration testing technique, you will learn how to solve hard problem, rubber duck debugging is a really useful technique in this course.  &lt;/p&gt;
 
 </description>
         <pubDate>Wed, 22 Apr 2015 23:04:00 +0800</pubDate>
