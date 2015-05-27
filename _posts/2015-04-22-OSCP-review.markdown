@@ -36,4 +36,5 @@ For people who would like to take this course:
 </ul>
 
 
+At first, you will be so frusrated by hearing the "Try Harder" slogan. However, you will get used to it and start to understand the real meaning of "Try Harder". It gives you more than penetration testing technique, you will learn how to solve hard problem, rubber duck debugging is a really useful technique in this course.  
 
